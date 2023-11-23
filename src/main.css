@@ -1,0 +1,17 @@
+p{
+    font-size: 14px;
+    padding: 0;
+    margin: 5px;
+    color: black;
+}
+td{
+
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    color: black;
+    text-align: left;
+    border: 1px solid #e5e7eb;
+    border-width: 1px;
+    padding: 0.3rem 0.3rem;
+}
