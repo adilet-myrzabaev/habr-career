@@ -98,6 +98,11 @@ onMounted(async () => {
         </p>
       </template>
     </Column>
+    <Column field="inner_comment" header="Внутренный комент.">
+      <template #body>
+        <img src="https://i.pinimg.com/564x/d6/17/06/d61706aa4c7957b5dcdf60f8dbc24ae2.jpg" alt="">
+      </template>
+    </Column>
 
   </DataTable>
 </template>
