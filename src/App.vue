@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import moment from 'moment';
+import 'moment/locale/ru.js'
 import {onMounted, ref} from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import axios from 'axios';
-
+moment().locale('ru')
 const dt = ref();
 const products = ref();
 const selectedProducts = ref();
@@ -37,7 +38,8 @@ onMounted(async () => {
     <Column field="diets" header="Диета" >
       <template #body="slotProps">
         <div v-for="item in slotProps.data.diets">
-          <p>{{item}}</p>
+          <p class="mx-auto">{{item}}</p>
+          <div class="line" style="padding: 1px; border-bottom: 1px dotted;"></div>
         </div>
       </template>
     </Column>
@@ -45,12 +47,13 @@ onMounted(async () => {
       <template #body="slotProps">
         <div v-for="item in slotProps.data.tariff">
           <p>{{item}}</p>
+          <div class="line" style="padding: 1px; border-bottom: 1px dotted;"></div>
         </div>
       </template>
     </Column>
-    <Column field="phone" header="Тел." body-style="white-space: nowrap; font-size: 14px;"></Column>
-    <Column field="address" header="Адрес"></Column>
-    <Column field="dates" header="Дата">
+    <Column field="address" header="Адрес" body-style="width: 100px;font-size: 14px;"></Column>
+    <Column field="phone" header="Тел." body-style="width: 100px;font-size: 14px;"></Column>
+    <Column field="dates" header="Дата" sortable>
       <template #body="slotProps">
         <div>
           {{moment(slotProps.data.dates[0].start_date).locale('ru').format('DD.MMM')}}
@@ -61,7 +64,12 @@ onMounted(async () => {
         </div>
       </template>
     </Column>
-    <Column header="Оплата" body-style="background: #FF9999;">
+    <Column field="discount" header="Скидка" sortable header-style="width: 50px;">
+      <template #body="slotProps">
+        <small v-if="slotProps.data.discount > 0">{{slotProps.data.discount}}%</small>
+      </template>
+    </Column>
+    <Column header="Оплата" body-style="white-space: nowrap;background: #FF9999;">
       <template #body="slotProps">
         <p><small class="pay">Стоим.: {{ slotProps.data.order_sum }} р</small></p>
         <p><small class="pay">{{slotProps.data.pay_status}}</small></p>
@@ -88,19 +96,9 @@ onMounted(async () => {
         </p>
       </template>
     </Column>
-    <Column field="inner_comment" header="Внутренный комент.">
+    <Column field="dates[end_date]" header="Статус" sortable>
       <template #body="slotProps">
-        <p style="border: 1px dotted #FF9C95; padding: 5px; display: flex;">
-          <span class="mr-1 ">
-            <img class="message" src="https://www.svgrepo.com/show/156725/message.svg" alt="comment">
-          </span>
-          <small v-if="slotProps.data.inner_comment">{{slotProps.data.inner_comment}}</small>
-        </p>
-      </template>
-    </Column>
-    <Column field="inner_comment" header="Внутренный комент.">
-      <template #body>
-        <img src="https://i.pinimg.com/564x/d6/17/06/d61706aa4c7957b5dcdf60f8dbc24ae2.jpg" alt="">
+        <small>{{moment(slotProps.data.dates[0].end_date).locale('ru').endOf('day').fromNow()}}</small>
       </template>
     </Column>
 
